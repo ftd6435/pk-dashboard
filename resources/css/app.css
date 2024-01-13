@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+svg {
+    cursor: pointer;
+}
+
+.aside-menu li a i {
+    color: rgb(100 116 139);
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+}
+
+.aside-menu li a:hover i {
+    color: rgb(165 180 252);
+}
+
+.primary-font {
+    font-family: "Poppins", sans-serif;
+}
+
+.headline-font {
+    font-family: "Noto Sans", sans-serif;
+}
+
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 20rem 1fr;
+    grid-template-rows: auto;
+    height: 100vh;
+    transition: all 0.5s ease;
+    /* grid-column: 1 / -1; */
+}
+
+.isClose {
+    display: none;
+    transition: all 0.5s ease;
+}
+
+.fullScreen {
+    grid-template-columns: 1fr;
+    transition: all 0.5s ease;
+}
+
+.image {
+    width: 8rem;
+    height: 5rem;
+}
+
+.image-profil{
+    width: 6rem;
+    height: 6rem;
+}
