@@ -11,10 +11,16 @@
         <a href="/team" class="px-6 py-2 rounded-xl border border-indigo-500 bg-indigo-600 text-indigo-50 font-medium transition-all hover:bg-indigo-500 duration-300 focus:outline-none focus:ring focus:ring-indigo-500">&LeftArrow; Retour</a>
     </div>
 
+    @include('pages.admin.include.authError')
+
     <div class="mx-3 shadow border border-slate-100 bg-slate-50 rounded overflow-hidden">
         <div class="grid grid-cols-[0.8fr_1fr] gap-5 shadow bg-indigo-600 text-indigo-50 p-6">
             <div class="flex items-center gap-5">
-                <img src="/storage/images/team/<?= $team->avatar ?>" class="w-[6.5rem] h-[6.5rem] border-4 border-indigo-50 rounded-full" alt="Profile-{{ $team->fullName }}">
+                @php
+                    $memberAvatar = $team->avatar ? "/storage/images/team/" . $team->avatar : '/img/avatar.jpeg';
+                @endphp
+
+                <img src="{{ $memberAvatar }}" class="w-[6.5rem] h-[6.5rem] border-4 border-indigo-50 rounded-full" alt="Profile-{{ $team->fullName }}">
                 <div>
                     <h2 class="headline-font text-2xl font-semibold">{{ $team->fullName }}</h2>
                     <p class="text-center tracking-wide text-sm font-semibold italic">{{ $team->position }}</p>
@@ -102,7 +108,7 @@
                 </div> 
                 
                 <input type="hidden" name="client_id" value="{{ $client->id }}">
-                <input type="hidden" name="user_id" value="1">
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                 
                 <div class="flex justify-end gap-6 mt-8">
                     <button type="reset" class="px-6 py-2 rounded-xl border border-red-600 font-medium hover:border-red-600 hover:text-red-500 focus:outline-none focus:ring focus:ring-red-600 transition-all duration-300">Annuler</button>

@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestCreateService;
 use App\Http\Requests\RequestEditService;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
+
     public function index(){
         $services = Service::latest()->paginate(10);
 
@@ -29,6 +32,10 @@ class ServiceController extends Controller
     }
 
     public function edit($id){
+        if(Auth::user()->role !== "admin" && Auth::user()->role !== "editer"){
+            return redirect('/services')->with(["message" => "Vous n'êtes pas autorisé a éditer un service. Merci de contacter l'administrateur ou l'éditeur.", "status" => "error"]);
+        }
+
         $service = Service::findOrFail($id);
 
         return view('pages/admin/editService', ['service' => $service]);
@@ -53,6 +60,10 @@ class ServiceController extends Controller
     }
 
     public function destroy(Service $service){
+        if(Auth::user()->role !== "admin"){
+            return redirect('/services')->with(["message" => "Vous n'êtes pas autorisé a supprimer un service. Merci de contacter l'administrateur.", "status" => "error"]);
+        }
+
         $service->delete();
         return redirect('/services')->with(['message' => 'Service supprimé avec success', 'status' => "success"]);
     }

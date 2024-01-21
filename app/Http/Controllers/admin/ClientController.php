@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestCreateClient;
 use App\Http\Requests\RequestEditClient;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
+    
     public function index(){
         $clients = Client::latest()->paginate();
 
@@ -24,7 +27,11 @@ class ClientController extends Controller
     }
 
     public function create(){
-        return view('pages/admin/createEditClient');
+        if(Auth::user()->role === "admin" || Auth::user()->role === "editer"){
+            return view('pages/admin/createEditClient');
+        }
+
+        return redirect('/clients')->with(["message" => "Vous n'êtes pas autorisé a créer un client. Merci de contacter l'administrateur ou l'éditeur.", "status" => "error"]);
     }
 
     public function store(RequestCreateClient $request){
@@ -41,9 +48,13 @@ class ClientController extends Controller
     }
 
     public function edit($id){
-        $client = Client::findOrFail($id);
+        if(Auth::user()->role === "admin" || Auth::user()->role === "editer"){
+            $client = Client::findOrFail($id);
 
-        return view('pages/admin/createEditClient', ['client' => $client]);
+            return view('pages/admin/createEditClient', ['client' => $client]);
+        }
+
+        return redirect('/clients')->with(["message" => "Vous n'êtes pas autorisé a éditer un client. Merci de contacter l'administrateur ou l'éditeur.", "status" => "error"]);
     }
 
     public function update(Client $client, RequestEditClient $request){
@@ -64,7 +75,11 @@ class ClientController extends Controller
     }
 
     public function destroy(Client $client){
-        $client->delete();
-        return redirect('/clients')->with(['message' => 'Le client a été supprimé avec succès', 'status' => 'success']);
+        if(Auth::user()->role === "admin"){
+            $client->delete();
+            return redirect('/clients')->with(['message' => 'Le client a été supprimé avec succès', 'status' => 'success']);
+        }
+        
+        return redirect('/clients')->with(["message" => "Vous n'êtes pas autorisé a supprimer un client. Merci de contacter l'administrateur.", "status" => "error"]);
     }
 }

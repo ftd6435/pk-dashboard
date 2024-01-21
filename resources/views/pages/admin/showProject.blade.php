@@ -10,13 +10,19 @@
             <span class="block uppercase text-sm rounded-xl font-semibold px-3 py-1 <?= $project->status === "en cours" ? 'bg-yellow-300' : ($project->status === "en etudes" ? "bg-indigo-400" :  "bg-green-300")  ?> text-stone-600">{{ $project->status }}</span>
         </div>
 
+
         <a href="/projects" class="px-6 py-2 rounded-xl border border-indigo-500 bg-indigo-600 text-indigo-50 font-medium transition-all hover:bg-indigo-500 duration-300 focus:outline-none focus:ring focus:ring-indigo-500">&LeftArrow; Retour</a>
     </div>
+
+    @include('pages.admin.include.authError')
 
     <div class="mx-3 shadow border border-slate-100 bg-slate-50 rounded overflow-hidden">
         <div class="grid grid-cols-[0.8fr_1fr] gap-5 shadow bg-indigo-600 text-indigo-50 p-6">
             <div class="flex items-center gap-5">
-                <img src="/storage/images/clients/<?= $project->client->image ?>" class="w-[6.5rem] h-[6.5rem] border-4 border-indigo-50 rounded-full" alt="Profile-{{ $project->client->fullName }}">
+                @php
+                    $projectClient = $project->client->image ? "/storage/images/clients/" . $project->client->image : '/img/avatar.jpeg'; 
+                @endphp
+                <img src="{{ $projectClient }}" class="w-[6.5rem] h-[6.5rem] border-4 border-indigo-50 rounded-full" alt="Profile-{{ $project->client->fullName }}">
                 <div>
                     <h2 class="headline-font text-2xl font-semibold">{{ $project->client->fullName }}</h2>
                     <p class="text-center tracking-wide text-sm font-semibold italic">{{ $project->client->profession }}</p>
@@ -73,7 +79,7 @@
                     <textarea name="testimonial" id="testimonial" class="px-3 py-2 rounded-xl bg-slate-50 focus:outline-none focus:ring focus:ring-indigo-200" rows="5">{{ $project->testimonial }}</textarea>
                 </div>
                 
-                <input type="hidden" name="user_id" value="1">
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                 
                 <div class="flex justify-end gap-6 mt-8">
                     <button type="reset" class="px-6 py-2 rounded-xl border border-red-600 font-medium hover:border-red-600 hover:text-red-500 focus:outline-none focus:ring focus:ring-red-600 transition-all duration-300">Annuler</button>
@@ -104,7 +110,7 @@
                     </select>
                 </div> 
                 
-                <input type="hidden" name="user_id" value="1">
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                 
                 <div class="flex justify-end gap-6 mt-8">
                     <button type="reset" class="px-6 py-2 rounded-xl border border-red-600 font-medium hover:border-red-600 hover:text-red-500 focus:outline-none focus:ring focus:ring-red-600 transition-all duration-300">Annuler</button>

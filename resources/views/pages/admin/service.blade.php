@@ -14,8 +14,11 @@
 
     <div class="mx-3 flex flex-col">
         @include('pages.admin.include.success')
+        @include('pages.admin.include.authError')    
 
-        <button id="service" data-modalName="service-add" class="open-modal my-4 bg-indigo-500 text-indigo-50 py-2 rounded-md uppercase tracking-normal font-semibold hover:bg-indigo-600 transition-all focus:outline-none focus:ring focus:ring-indigo-600">Ajouter un service</button>
+        @can('create', \App\Models\Service::class)
+            <button id="service" data-modalName="service-add" class="open-modal my-4 bg-indigo-500 text-indigo-50 py-2 rounded-md uppercase tracking-normal font-semibold hover:bg-indigo-600 transition-all focus:outline-none focus:ring focus:ring-indigo-600">Ajouter un service</button>
+        @endcan
 
         <div role="table" class="shadow border border-slate-100 bg-slate-50 rounded overflow-hidden">
             <div role="row" class="grid grid-cols-[auto_0.4fr_1fr_1fr] items-center gap-x-9 tracking-wide transition-none py-6 px-4 bg-slate-50 border-b border-slate-200 uppercase font-semibold">
@@ -32,12 +35,17 @@
                     </div>
                     <div><?= $service->title ?></div>
                     <div class="flex gap-3 items-center">
-                        <a href="/services/<?= $service->id ?>/edit" class="border border-yellow-400 bg-yellow-500 text-indigo-50 font-medium text-sm px-6 py-1 rounded-lg tracking-wide hover:bg-yellow-400 hover:border-yellow-500 focus:outline-none focus:ring focus:ring-yellow-400 transition-all duration-300">Edit</a>
-                        <form action="/services/<?= $service->id ?>" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button onclick="return confirm('Voulez-vous supprimer le service #{{ $service->id }}')" class="border bg-red-600 text-indigo-50 font-medium text-sm px-4 py-1 rounded-lg tracking-wide hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-500 transition-all duration-300">Delete</button>
-                        </form>
+                        @can('update', $service)     
+                            <a href="/services/<?= $service->id ?>/edit" class="border border-yellow-400 bg-yellow-500 text-indigo-50 font-medium text-sm px-6 py-1 rounded-lg tracking-wide hover:bg-yellow-400 hover:border-yellow-500 focus:outline-none focus:ring focus:ring-yellow-400 transition-all duration-300">Edit</a>
+                        @endcan
+
+                        @can('delete', $service)
+                            <form action="/services/<?= $service->id ?>" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button onclick="return confirm('Voulez-vous supprimer le service #{{ $service->id }}')" class="border bg-red-600 text-indigo-50 font-medium text-sm px-4 py-1 rounded-lg tracking-wide hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-500 transition-all duration-300">Delete</button>
+                            </form>
+                        @endcan
                     </div>
                 </div>
             @endforeach  
@@ -74,7 +82,7 @@
                         hover:file:bg-indigo-500
                     ">
                 </div>
-                <input type="hidden" name="user_id" value="1">
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                 
                 <div class="flex justify-end gap-6 mt-8">
                     <button type="reset" class="px-6 py-2 rounded-xl border border-red-600 font-medium hover:border-red-600 hover:text-red-500 focus:outline-none focus:ring focus:ring-red-600 transition-all duration-300">Annuler</button>

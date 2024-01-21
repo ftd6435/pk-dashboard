@@ -11,10 +11,16 @@
         <a href="/clients" class="px-6 py-2 rounded-xl border border-indigo-500 bg-indigo-600 text-indigo-50 font-medium transition-all hover:bg-indigo-500 duration-300 focus:outline-none focus:ring focus:ring-indigo-500">&LeftArrow; Retour</a>
     </div>
 
+    @include('pages.admin.include.authError')
+
     <div class="mx-3 shadow border border-slate-100 bg-slate-50 rounded overflow-hidden">
         <div class="grid grid-cols-[0.8fr_1fr] gap-5 shadow bg-indigo-600 text-indigo-50 p-6">
             <div class="flex items-center gap-5">
-                <img src="/storage/images/clients/<?= $client->image ?>" class="w-[6.5rem] h-[6.5rem] border-4 border-indigo-50 rounded-full" alt="Profile-{{ $client->fullName }}">
+                @php
+                    $clientImage = $client->image ? "/storage/images/clients/" . $client->image : '/img/avatar.jpeg';
+                @endphp
+
+                <img src="{{ $clientImage }}" class="w-[6.5rem] h-[6.5rem] border-4 border-indigo-50 rounded-full" alt="Profile-{{ $client->fullName }}">
                 <div>
                     <h2 class="headline-font text-2xl font-semibold">{{ $client->fullName }}</h2>
                     <p class="text-center tracking-wide text-sm font-semibold italic">{{ $client->profession }}</p>
@@ -67,7 +73,9 @@
     </div>
 
     <div class="mx-3 my-6 flex justify-end gap-5 items-center">
-        <button id="newProject" data-modalName="newProject-add" class="open-modal px-4 py-3 rounded-xl border border-indigo-500 bg-indigo-600 text-indigo-50 font-medium transition-all hover:bg-indigo-500 duration-300 focus:outline-none focus:ring focus:ring-indigo-500">Ajouter un projet</button>
+        @can('create', \App\Models\Client::class)           
+            <button id="newProject" data-modalName="newProject-add" class="open-modal px-4 py-3 rounded-xl border border-indigo-500 bg-indigo-600 text-indigo-50 font-medium transition-all hover:bg-indigo-500 duration-300 focus:outline-none focus:ring focus:ring-indigo-500">Ajouter un projet</button>
+        @endcan
     </div>
 
     {{-- CREATION OF NEW PROJECT FOR THE CURRENT USER MODAL --}}
@@ -115,7 +123,7 @@
                 </div> 
                 
                 <input type="hidden" name="client_id" value="{{ $client->id }}">
-                <input type="hidden" name="user_id" value="1">
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                 
                 <div class="flex justify-end gap-6 mt-8">
                     <button type="reset" class="px-6 py-2 rounded-xl border border-red-600 font-medium hover:border-red-600 hover:text-red-500 focus:outline-none focus:ring focus:ring-red-600 transition-all duration-300">Annuler</button>

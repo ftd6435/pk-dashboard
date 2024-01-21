@@ -7,11 +7,14 @@ use App\Http\Requests\RequestCreatePost;
 use App\Http\Requests\RequestEditPost;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
+
     public function index(){
         $posts = Post::latest()->paginate(10);
 
@@ -19,6 +22,10 @@ class BlogController extends Controller
     }
 
     public function create(){
+        if(Auth::user()->role !== "admin" && Auth::user()->role !== "editer"){
+            return redirect('/blog')->with(["message" => "Vous n'êtes pas autorisé a créer un article. Merci de contacter l'administrateur ou l'éditeur.", "status" => "error"]);
+        }
+
         $categories = Category::all();
 
         return view('pages/admin/createEditPost', ['categories' => $categories]);
@@ -36,6 +43,10 @@ class BlogController extends Controller
     }
 
     public function edit($id){
+        if(Auth::user()->role !== "admin" && Auth::user()->role !== "editer"){
+            return redirect('/blog')->with(["message" => "Vous n'êtes pas autorisé a éditer cet article. Merci de contacter l'administrateur ou l'éditeur.", "status" => "error"]);
+        }
+
         $post = Post::findOrFail($id);
         $categories = Category::all();
 
@@ -60,6 +71,10 @@ class BlogController extends Controller
     }
 
     public function destroy(Post $post){
+        if(Auth::user()->role !== "admin"){
+            return redirect('/blog')->with(["message" => "Vous n'êtes pas autorisé a supprimer un article. Merci de contacter l'administrateur.", "status" => "error"]);
+        }
+
         $post->delete();
         return redirect('/blog')->with(['message' => "L'article a été supprimé avec succès", 'status' => 'success']);
     }
