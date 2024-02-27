@@ -10,7 +10,7 @@
 
     @include('pages.admin.include.error')
 
-    <div class="mx-3 flex flex-col">
+    <div class="mx-3 flex flex-col shadow border border-slate-100 bg-slate-50 rounded overflow-hidden p-6">
         <form action={{ route('service.update', $service) }} method="POST" enctype="multipart/form-data" class="flex flex-col">
             @csrf
             @method('PUT')

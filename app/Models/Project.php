@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Project extends Model
 {
@@ -32,6 +34,10 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function projectComments() : HasMany{
+        return $this->hasMany(ProjectComment::class);
+    }
+
     public function formatDate($date){
         $dt = Carbon::create($date);
         $formatDate = $dt->toDateString();
@@ -56,5 +62,23 @@ class Project extends Model
         
         $months = $dt1->diffInMonths($dt2);
         return $months;
+    }
+
+    public function name($name){
+        return Str::limit($name, 15);
+    }
+
+    public function details($details){
+        return Str::limit($details, 60);
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class);
+    }
+
+    public function projectImages($images) : array{
+        $data = explode('|', $images[0]['images']);
+        return $data;
     }
 }

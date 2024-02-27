@@ -10,7 +10,7 @@
 
     @include('pages.admin.include.error')
 
-    <div class="mx-3 flex flex-col">
+    <div class="mx-3 flex flex-col shadow border border-slate-100 bg-slate-50 rounded overflow-hidden p-6">
         <form action="{{ isset($team->id) ? route('team.update', $team) : route('team.store')}}" method="POST" enctype="multipart/form-data" class="flex flex-col">
             @csrf
             @method(isset($team->id) ? 'PUT' : 'POST')

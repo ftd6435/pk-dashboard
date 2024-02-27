@@ -21,7 +21,7 @@
         @endcan
 
         <div role="table" class="shadow border border-slate-100 bg-slate-50 rounded overflow-hidden">
-            <div role="row" class="grid grid-cols-[auto_0.6fr_0.6fr_1fr_0.6fr_1fr] items-center gap-x-9 tracking-wide transition-none py-6 px-4 bg-slate-50 border-b border-slate-200 uppercase font-semibold">
+            <div role="row" class="grid grid-cols-[auto_0.6fr_0.6fr_1fr_0.9fr_1fr] items-center gap-x-9 tracking-wide transition-none py-6 px-4 bg-slate-50 border-b border-slate-200 uppercase font-semibold">
                 <div>#ID</div>
                 <div>IMAGE</div>
                 <div>CLIENT</div>
@@ -30,7 +30,7 @@
                 <div>ACTIONS</div>
             </div>
             @foreach ($projects as $key => $project )
-                <div role="row" class="grid grid-cols-[auto_0.6fr_0.6fr_1fr_0.6fr_1fr] items-center gap-x-9 border-b border-slate-200 py-2 px-2 transition-none font-medium">
+                <div role="row" class="grid grid-cols-[auto_0.6fr_0.6fr_1fr_auto_1fr] items-center gap-x-9 border-b border-slate-200 py-2 px-2 transition-none font-medium">
                     <div class="md:px-4"><?= $key + 1 ?></div>
                     <div>
                         @php
@@ -47,6 +47,7 @@
                             <a href="{{ route('projects.edit', $project->id) }}" class="border border-yellow-400 bg-yellow-500 text-indigo-50 font-medium text-sm px-6 py-1 rounded-lg tracking-wide hover:bg-yellow-400 hover:border-yellow-500 focus:outline-none focus:ring focus:ring-yellow-400 transition-all duration-300">Edit</a>
                         @endcan
 
+                        <a href="{{ route('images.uplaod', $project->id) }}" class="border border-green-400 bg-green-500 text-indigo-50 font-medium text-sm px-4 py-1 rounded-lg tracking-wide hover:bg-green-400 hover:border-green-500 focus:outline-none focus:ring focus:ring-green-400 transition-all duration-300">Images</a>
                         <a href="{{ route('projects.show', $project->id) }}" class="border border-indigo-400 bg-indigo-500 text-indigo-50 font-medium text-sm px-4 py-1 rounded-lg tracking-wide hover:bg-indigo-400 hover:border-indigo-500 focus:outline-none focus:ring focus:ring-indigo-400 transition-all duration-300">Details</a>
                         
                         @can('delete', $project)

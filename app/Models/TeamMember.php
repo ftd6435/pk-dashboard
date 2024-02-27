@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class TeamMember extends Model
 {
@@ -32,5 +33,9 @@ class TeamMember extends Model
     public function shortDateFormat($date){
         $dt = Carbon::create($date)->locale('fr_FR');
         return $dt->isoFormat('LLLL');
+    }
+
+    public function firstLetter($str){
+        return Str::ucfirst($str);
     }
 }

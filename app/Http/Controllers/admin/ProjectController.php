@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestCreateProject;
 use App\Http\Requests\RequestEditProject;
 use App\Models\Client;
+use App\Models\Image;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,8 +23,18 @@ class ProjectController extends Controller
 
     public function show($id){
         $project = Project::findOrFail($id);
+        $arrayImages = Image::select()->where('project_id', $id)->get();
 
-        return view('pages/admin/showProject', ['project' => $project]);
+        if(count($arrayImages) > 0){
+            $images = explode('|', $arrayImages[0]['images']);
+            $images_id = $arrayImages[0]['id'];
+        }
+
+        return view('pages/admin/showProject', [
+            'project' => $project, 
+            'images' => $images ?? "", 
+            'images_id' => $images_id ?? ""
+        ]);
     }
 
     public function create(){

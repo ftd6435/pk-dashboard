@@ -17,6 +17,10 @@ svg {
     color: rgb(165 180 252);
 }
 
+.text-primary{
+    color: #FD5D14;
+}
+
 .primary-font {
     font-family: "Poppins", sans-serif;
 }
@@ -52,4 +56,27 @@ svg {
 .image-profil{
     width: 6rem;
     height: 6rem;
+}
+
+.paralax{
+    position: absolute;
+    width: 60%;
+    padding: 4rem 0 0 0;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(rgba(4, 15, 40, .6), rgba(4, 15, 40, .6)), url('/public/img/carousel-1.jpg') no-repeat center center / cover;
+    z-index: -1;
+}
+
+.paralax-unsub{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    padding: 4rem 0 0 0;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(rgba(4, 15, 40, .6), rgba(4, 15, 40, .6)), url('/public/img/carousel-1.jpg') no-repeat center center / cover;
+    z-index: -1;
 }

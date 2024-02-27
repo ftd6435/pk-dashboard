@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestCreatePost;
 use App\Http\Requests\RequestEditPost;
 use App\Models\Category;
+use App\Models\Newsletter;
 use App\Models\Post;
 use App\Models\User;
+use App\Notifications\NewsletterNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,7 +41,13 @@ class BlogController extends Controller
         $request->image->storeAs('public/images/posts', $imageName);
         $validate['image'] = $imageName;
 
-        Post::create($validate);
+        $post = Post::create($validate);    
+
+        $newsletters = Newsletter::all();
+        
+
+        Notification::send($newsletters, new NewsletterNotification($post));
+
         return redirect('/blog')->with(['message' => "L'article a été ajouté avec succès", 'status' => 'success']);
     }
 

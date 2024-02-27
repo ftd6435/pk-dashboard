@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <!-- Favicon -->
+    <link href="/img/logo.png" rel="icon">
+
     {{-- Fontawesome Icons Link  --}}
     <script src="https://kit.fontawesome.com/b91affedee.js"></script>
     {{-- Boxicons Icons Link --}}
@@ -13,6 +16,9 @@
     {{-- Font family Link: Poppins & Noto Sans --}}
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <title>@yield('title') || Real Estate Admin</title>
@@ -29,9 +35,17 @@
         {{-- SIDE BAR MENU  --}}
         <aside class="sidebar h-full bg-slate-50 flex flex-col gap-3.5 py-3.5 px-2.5 overflow-y-scroll">
             <div class="flex justify-center">
-                <img src="/img/logo.jpg" class="w-auto h-[7.5rem]" alt="logo">
+                {{-- <img src="/img/logo-white.jpg" class="w-auto h-[7.5rem]" alt="logo"> --}}
+                <img src="/img/logo-white.jpg" alt="Logo" class="block rounded-full text-center" width="300" height="120" />
             </div>
             <ul class="aside-menu p-0 m-0 flex flex-col gap-2 text-slate-500">
+                <li>
+                    <a href="{{ route('home') }}" class="flex items-center gap-4 font-medium py-3 px-[2.4rem] text-base {{ $routeName === "home" ? 'bg-indigo-100' : 'bg-indigo-0' }} transition-all duration-300 hover:bg-indigo-100 active:bg-indigo-100 focus:outline-none focus:ring focus:ring-indigo-100 rounded-md">
+                        <i class='bx bxs-home'></i>
+                        <span>Acceuil</span>
+                    </a>
+                </li>
+
                 <li>
                     <a href="/dashboard" class="flex items-center gap-4 font-medium py-3 px-[2.4rem] text-base {{ $routeName === "dashboard" ? 'bg-indigo-100' : 'bg-indigo-0' }} transition-all duration-300 hover:bg-indigo-100 active:bg-indigo-100 focus:outline-none focus:ring focus:ring-indigo-100 rounded-md">
                         <i class='bx bxs-dashboard'></i>
@@ -49,7 +63,7 @@
                 <li>
                     <a href="/projects" class="flex items-center gap-4 font-medium py-3 px-[2.4rem] text-base {{ $routeName === "projects" ? 'bg-indigo-100' : 'bg-indigo-0' }} transition-all duration-300 hover:bg-indigo-100 active:bg-indigo-100 focus:outline-none focus:ring focus:ring-indigo-100 rounded-md">
                         <i class='bx bxs-objects-vertical-bottom' ></i>
-                        <span>Projects</span>
+                        <span>Projets</span>
                     </a>
                 </li>
 
@@ -63,7 +77,7 @@
                 <li>
                     <a href="/categories" class="flex items-center gap-4 font-medium py-3 px-[2.4rem] text-base {{ $routeName === "categories" ? 'bg-indigo-100' : 'bg-indigo-0' }} transition-all duration-300 hover:bg-indigo-100 active:bg-indigo-100 focus:outline-none focus:ring focus:ring-indigo-100 rounded-md">
                         <i class='bx bx-category' ></i>
-                        <span>Categories</span>
+                        <span>Catégories</span>
                     </a>
                 </li>
                 
@@ -129,6 +143,7 @@
     </div>
 
     {{-- JAVASCRIPT CODE --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script>
         const allModalBtns = document.querySelectorAll('.open-modal');
         const editModalBtns = document.querySelectorAll('.edit-btn');
@@ -138,6 +153,8 @@
         // USER AVATAR PREVIEW
         const userAvatar = document.querySelector('#userAvatar');
         const previewAvatar = document.querySelector('#previewAvatar');
+        // MULTIPLE IMAGES PREVIEW 
+        // Select code...
         // EDIT ROLE
         let userId = document.querySelector('#user_id_role');
         
@@ -150,7 +167,6 @@
                     if(attr === "editRole-add"){
                         let editRole_id = modalBtn.getAttribute('data-id');
                         userId.value = editRole_id;
-                        // console.log($userId);
                     }
 
                     modals.forEach(modal => {
@@ -216,6 +232,9 @@
                 previewAvatar.src = URL.createObjectURL(file);
             }
         }
+
+        // UPLOAD MULTIPLE IMAGES WITH PREVIEW
+        // Code .....
 
     </script>
 
