@@ -1,5 +1,7 @@
 @extends('frontend.frontend')
 
+@section('title', 'Acceuil')
+
 @section('content')
 
     {{-- Header starts --}}

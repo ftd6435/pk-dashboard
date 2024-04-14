@@ -1,5 +1,7 @@
 @extends('frontend.frontend')
 
+@section('title', 'Page introuvable')
+
 @section('content')
 
     {{-- Header starts --}}

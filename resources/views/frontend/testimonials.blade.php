@@ -1,5 +1,7 @@
 @extends('frontend.frontend')
 
+@section('title', 'Les témoignages')
+
 @section('content')
 
     {{-- Header starts --}}

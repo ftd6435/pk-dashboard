@@ -3,10 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>WEBUILD -  Construction Company Website Template Free</title>
+    <title>@yield('title') -  {{ env('APP_NAME') }}</title>
+
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <meta property="og:title" content="@yield('title')" >
+    <meta property="og:description" content="@yield('description')">
+    <meta property="og:image" content="@yield('image')">
+    <meta name="keywords" content="construction,building,immobilier">
 
     <!-- Favicon -->
     <link href="/img/logo.png" rel="icon">

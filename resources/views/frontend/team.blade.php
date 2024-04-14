@@ -1,5 +1,7 @@
 @extends('frontend.frontend')
 
+@section('title', "Notre équipe")
+
 @section('content')
 
     {{-- Header starts --}}

@@ -1,5 +1,9 @@
 @extends('frontend.frontend')
 
+@section('title', $service->title)
+@section('description', $service->description)
+@section('image', '/storage/images/services/' . $service->image)
+
 @section('content')
 
     {{-- Header starts --}}
@@ -82,14 +86,14 @@
     
                 <!-- Sidebar Start -->
                 <div class="col-lg-4">
-                    <!-- Search Form Start -->
-                    <div class="mb-5">
-                        <div class="input-group">
-                            <input type="text" class="form-control p-3" placeholder="Keyword">
-                            <button class="btn btn-primary px-3"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                    <!-- Search Form End -->
+                    <!-- SEARCH FORM TO IMPLEMENT LATER STARTS -->
+                        {{-- <div class="mb-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control p-3" placeholder="Keyword">
+                                <button class="btn btn-primary px-3"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div> --}}
+                    <!-- SEARCH FORM TO IMPLEMENT LATER ENDS -->
     
                     <!-- Status Start -->
                     <div class="mb-5">

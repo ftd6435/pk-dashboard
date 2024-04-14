@@ -1,5 +1,9 @@
 @extends('frontend.frontend')
 
+@section('title', $post->title)
+@section('description', $post->content($post->content))
+@section('image', '/storage/images/posts/' . $post->image)
+
 @section('content')
 
     {{-- Header starts --}}
@@ -17,10 +21,18 @@
                 <div class="col-lg-8">
                     <!-- Blog Detail Start -->
                     <div class="mb-5">
-                        <img class="img-fluid w-100 rounded mb-5" src="/storage/images/posts/{{ $post->image }}" alt="article-{{ $post->id }}">
-                        <h1 class="text-uppercase mb-4">{{ $post->title }}</h1>
+                        <img class="img-fluid w-100 rounded" src="/storage/images/posts/{{ $post->image }}" alt="article-{{ $post->id }}">
+                      
+                        <ul class="d-flex mt-8 mb-8 mx-0 px-2 py-3" style="list-style: none">
+                            <li class="me-4 d-flex align-item-center justify-content-center"><span class="fw-bold primary-font me-2">Partager</span> <span><i class="fa-solid fa-share"></i></span></li>
+                            <li class="me-3 social-media"><a href="{{ $shareLinks['facebook'] }}"><i class="fa-brands fa-facebook fs-5"></i></a></li>
+                            <li class="me-3 social-media"><a href="{{ $shareLinks['twitter'] }}"><i class="fa-brands fa-twitter fs-5"></i></a></li>
+                            <li class="me-3 social-media"><a href="{{ $shareLinks['linkedin'] }}"><i class="fa-brands fa-linkedin fs-5"></i></a></li>
+                            <li class="me-3 social-media"><a href="{{ $shareLinks['whatsapp'] }}"><i class="fa-brands fa-whatsapp fs-5"></i></a></li>
+                        </ul>
+                        <h1 class="text-uppercase mb-4 headline-font">{{ $post->title }}</h1>
 
-                        <p>{{ $post->content }}</p>
+                        <p class="primary-font">{{ $post->content }}</p>
                     </div>
                     <!-- Blog Detail End -->
     
@@ -65,14 +77,14 @@
     
                 <!-- Sidebar Start -->
                 <div class="col-lg-4">
-                    <!-- Search Form Start -->
-                    <div class="mb-5">
-                        <div class="input-group">
-                            <input type="text" class="form-control p-3" placeholder="Keyword">
-                            <button class="btn btn-primary px-3"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                    <!-- Search Form End -->
+                    <!-- SEARCH FORM TO IMPLEMENT LATER STARTS -->
+                        {{-- <div class="mb-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control p-3" placeholder="Keyword">
+                                <button class="btn btn-primary px-3"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div> --}}
+                    <!-- SEARCH FORM TO IMPLEMENT LATER ENDS -->
     
                     <!-- Category Start -->
                     <div class="mb-5">

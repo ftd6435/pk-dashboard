@@ -66,8 +66,6 @@
                     <a class="text-dark" href="{{ route('dashboard') }}">Dashboard</a>
                 </p>
             @endauth
-            <!-- <p class="mb-0">Designed by <a class="text-dark" href="https://htmlcodex.com">HTML Codex</a></p>
-            <p class="mb-0">Distributed by <a class="text-dark" href="https://themewagon.com">ThemeWagon</a></p> -->
         </div>
     </div>
 </div>

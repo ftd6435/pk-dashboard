@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\TeamMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Jorenvh\Share\Share;
 
 class HomePageController extends Controller
 {
@@ -43,7 +44,7 @@ class HomePageController extends Controller
      * Show all the projects
      */
     public function project(){
-        $projects = Project::latest()->get();
+        $projects = Project::latest()->paginate(9);
         
         
         return view('frontend.projects', ['projects' => $projects]);
@@ -71,6 +72,7 @@ class HomePageController extends Controller
      */
     public function blog(){
         $posts = Post::latest()->paginate(9);
+        // things to do
 
         return view('frontend.blog', ['posts' => $posts]);
     }
@@ -79,7 +81,7 @@ class HomePageController extends Controller
      * Show the different posts PER category
      */
     public function showPerCategory($category_id){
-        $posts = Post::where('category_id', $category_id)->get();
+        $posts = Post::where('category_id', $category_id)->paginate(9);
 
         return view('frontend.perCategory', ['posts' => $posts]);
     }
@@ -88,7 +90,7 @@ class HomePageController extends Controller
      * Show the different project PER status (en cours, en etudes, realiser)
      */
     public function showPerStatus($status){
-        $projects = Project::where('status', $status)->get();
+        $projects = Project::where('status', $status)->paginate(9);
 
         return view('frontend.statusProject', ['projects' => $projects]);
     }
@@ -136,7 +138,20 @@ class HomePageController extends Controller
         $posts = Post::latest()->where('id', '<>', $id)->limit(9)->get();
         $status = Project::select('status')->groupBy('status')->get();
 
-        return view('frontend.details', ['post' => $post, 'posts' => $posts, 'categories' => $categories, 'status' => $status]);
+        $shareLinks = \Share::page(url()->current(), $post->content($post->content))
+        ->facebook()
+        ->twitter()
+        ->linkedin()
+        ->whatsapp($post->title)
+        ->getRawLinks();
+       
+        return view('frontend.details', [
+            'post' => $post, 
+            'posts' => $posts, 
+            'categories' => $categories, 
+            'status' => $status, 
+            'shareLinks' => $shareLinks
+        ]);
     }
 
     /**

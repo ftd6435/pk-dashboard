@@ -1,5 +1,7 @@
 @extends('frontend.frontend')
 
+@section('title', 'Les projets ' . $projects[0]->status)
+
 @section('content')
 
     {{-- Header starts --}}
@@ -27,6 +29,9 @@
             </div>
             <div class="row g-5 portfolio-container">
                 @include('frontend.inc.projectCard', ['projects' => $projects])
+
+                {{-- Customized pagination --}}
+                @include('frontend.inc.pkPagination', ['pkPagination' => $projects])
             </div>
         </div>
         <!-- Portfolio End -->

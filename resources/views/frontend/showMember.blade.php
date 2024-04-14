@@ -1,5 +1,9 @@
 @extends('frontend.frontend')
 
+@section('title', $member->fullName)
+@section('description', Str::limit($member->description, 200))
+@section('image', '/storage/images/team/' .  $member->avatar)
+
 @section('content')
 
     {{-- Header starts --}}
